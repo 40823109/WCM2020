@@ -1,5 +1,62 @@
-<h1>40823109</h1>
-<p>PyPdf2</p>
+<h1>First</h1><h1>SSH設定</h1>
+<p><span>利用 y:\portablegit\bin\sh.exe 進入 shell 命令環境後, 以</span></p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false"> ssh-keygen -t rsa -b 4096 -C "使用者學號"</pre>
+<p><img alt="" height="59" src="/images/1592577473981.jpg" width="279"/></p>
+<p>在 /y/home/.ssh 目錄下建立 id_rsa 與 id_rsa.pub 等 private key 與 public key</p>
+<p>之後以 SciTE 開啟 id_rsa.pub 後, 將此 public key 的內容, 以新增添加到 Github.com 帳號下 personal settings -&gt; SSH and GPG keys 頁面下</p>
+<p><img alt="" height="31" src="/images/1592577647763.jpg" width="400"/></p>
+<p><img caption="false" height="203" src="/images/1592577769726.jpg" width="339"/></p>
+<p><span>接下來要利用 puttygen.exe 將 id_rsa 轉為 Putty 可以解讀的 .ppk 格式, 並修改隨身系統的啟動批次檔案, 指定利用 putty 目錄下的 plink 執行 git 指令的網路代理設定.</span></p>
+<p><span><img alt="" height="265" src="/images/1592578252833.jpg" width="291"/></span></p>
+<p><span><img alt="" height="14" src="/images/1592578272268.jpg" width="445"/></span></p>
+<p><span>修改啟動 start.bat 加入設定 : </span></p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">set GIT_HOME=%Disk%:\portablegit\bin\
+set GIT_SSH=%Disk%:\putty\plink.exe</pre>
+<p><img alt="" height="44" src="/images/1592578888002.jpg" width="337"/>.</p>
+<p>利用 puttygen.exe 載入第二步驟所建立的 private key, 也就是 id_rsa.</p>
+<p>開啟 puttygen 之後, 以右下方的 load 載入 id_rsa, 成功載入後, 利用 save private key 按鈕, 將已經轉為 putty 格式的 .ppk 存檔. 此一 .ppk 檔案必須在設定 putty 中 github.com session 時, 在 Connection-&gt;SSH-&gt;Auth 項目下, 將轉檔後的 .ppk 指向 private key file for authentication 欄位. </p>
+<p><img alt="" height="239" src="/images/1592579351882.jpg" width="264"/></p>
+<p><img alt="" height="237" src="/images/1592579384378.jpg" width="263"/></p>
+<p><span>之後確定 home 下的 .ssh 目錄中的 config 設定檔案為 : </span></p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false"># no proxy at home
+#ProxyCommand y:/PortableGit/mingw64/bin/connect.exe -H proxy.mde.nfu.edu.tw:3128 %h %p
+# set git_ssh=y:/putty/plink.exe with auth under putty github.com session setup
+ProxyCommand y:/putty/plink.exe github.com %h %p
+ 
+Host github.com
+    User git
+    Port 22
+    Hostname github.com
+    
+    # for connect.exe need openssh key format
+    #IdentityFile "y:\home\.ssh\id_rsa_mdecourse"
+    # for plink.exe need rsa key format but set under putty github.com session
+    # plink.exe do not need the following setting
+    #IdentityFile "y:\home\.ssh\mdecourse_putty_private.ppk"
+ 
+    TCPKeepAlive yes
+    IdentitiesOnly yes
+</pre>
+<p><span>( 使用proxy才須使用接下來的設定 )</span></p>
+<p><span>最後再將 wcmj2020 倉儲中 .git 目錄下的 config 檔案中的連線協定, 由 https 改為採 ssh 連線: 範例如下:</span></p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[submodule]
+	active = .
+[remote "origin"]
+	#url = https://github.com/mdecourse/wcmj2020.git
+    url = git@github.com:mdecourse/wcmj2020.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "cmsimde"]
+	url = https://github.com/mdecourse/cmsimde.git</pre><h1>PyPdf2</h1>
 <p>可以用來切割，結合PDF檔</p>
 <p>(1)切割一段</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pypdf2_ex1.py
@@ -61,8 +118,7 @@ for i in ["WhatIsCMS.pdf","InforLifeCycle.pdf","EnterpriseContentManage.pdf"]:
 final_file_object = open('2020CMS.pdf', 'wb')
 pdf_write_object.write(final_file_object)
 final_file_object.close()
-</pre>
-<h1>錯誤處理</h1>
+</pre><h1>錯誤處理</h1>
 <h2>啟動 leo 出現錯誤</h2>
 <p>原因 : </p>
 <p>&gt;pythonw -u "launchLeo.py"<br/>Traceback (most recent call last):<br/> File "launchLeo.py", line 7, in &lt;module&gt;<br/> import leo.core.runLeo<br/>ModuleNotFoundError: No module named 'leo'<br/>&gt;Exit code: 1</p>
