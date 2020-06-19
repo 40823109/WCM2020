@@ -62,7 +62,10 @@ final_file_object = open('2020CMS.pdf', 'wb')
 pdf_write_object.write(final_file_object)
 final_file_object.close()
 </pre>
-<h1>原因 : 版本不一</h1>
+<h1>錯誤處理</h1>
+<h2>啟動 leo 出現錯誤</h2>
+<p></p><h2>pip install 無法使用</h2>
+<p>原因 : 版本不一</p>
 <p>解決方法 : 用 HxD 將 pip.exe中的 pythonw.exe取代為 python.exe</p>
 <p><img alt="" height="279" src="/images/1592530930939.jpg" width="539"/></p><h1>Develop</h1>
 <p><a href="https://github.com/mdecourse/cmsimde">https://github.com/mdecourse/cmsimde</a> 的開發, 可以在一個目錄中放入 cmsimde, 然後將 up_dir 中的內容放到與 cmsimde 目錄同位階的地方, 使用 command 進入 cmsimde 目錄, 執行 python wsgi.py, 就可以啟動, 以瀏覽器 https://localhost:9443 就可以連接, 以 admin 作為管理者密碼, 就可以登入維護內容.</p>
