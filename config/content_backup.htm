@@ -64,7 +64,10 @@ final_file_object.close()
 </pre>
 <h1>錯誤處理</h1>
 <h2>啟動 leo 出現錯誤</h2>
-<p></p><h2>pip install 無法使用</h2>
+<p>原因 : </p>
+<p>&gt;pythonw -u "launchLeo.py"<br/>Traceback (most recent call last):<br/> File "launchLeo.py", line 7, in &lt;module&gt;<br/> import leo.core.runLeo<br/>ModuleNotFoundError: No module named 'leo'<br/>&gt;Exit code: 1</p>
+<p><span>=&gt; ModuleNotFoundError: No module named 'leo' 沒有LEO模組</span></p>
+<p><span>解決方法 : 用 pip install leo 指令安裝 leo</span></p><h2>pip install 無法使用</h2>
 <p>原因 : 版本不一</p>
 <p>解決方法 : 用 HxD 將 pip.exe中的 pythonw.exe取代為 python.exe</p>
 <p><img alt="" height="279" src="/images/1592530930939.jpg" width="539"/></p><h1>Develop</h1>
